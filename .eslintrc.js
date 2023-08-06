@@ -1,29 +1,35 @@
+const process = require('node:process')
+
+process.env.ESLINT_TSCONFIG = 'tsconfig.json'
+
 module.exports = {
-  root: true,
-  env: {
-    browser: true,
-    node: true,
-  },
-  extends: [
-    '@nuxtjs/eslint-config-typescript',
-    'plugin:nuxt/recommended',
-    'plugin:prettier/recommended',
-    'plugin:promise/recommended',
-  ],
-  plugins: ['prettier'],
-  // add your custom rules here
+  extends: ['@antfu'],
   rules: {
-    'nuxt/no-cjs-in-config': 'off',
-    'no-console': 'warn',
+    'curly': ['warn', 'all'],
 
-    // sort imports
-    'sort-imports': ['warn', { ignoreDeclarationSort: true }],
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/brace-style': ['warn', '1tbs', { allowSingleLine: true }],
 
-    // Allow <template v-slot:foo.bar> or <template #foo.bar>
-    'vue/valid-v-slot': [
+    // Enable additional vue rules
+    // https://eslint.vuejs.org/rules/
+    'vue/block-lang': [
       'error',
       {
-        allowModifiers: true,
+        script: {
+          lang: 'ts',
+        },
+      },
+    ],
+    'vue/component-name-in-template-casing': [
+      'warn',
+      'PascalCase',
+      { registeredComponentsOnly: false },
+    ],
+
+    'unicorn/catch-error-name': [
+      'error',
+      {
+        name: 'err',
       },
     ],
   },
